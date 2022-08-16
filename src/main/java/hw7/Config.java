@@ -32,7 +32,12 @@ public class Config {
     URL url = Thread.currentThread().getContextClassLoader().getResource("");
     String path = url.getPath().replace("%20", " ")
         .replace("classes", "resources");
+
     Path dataFile = Paths.get(path.substring(1), DATA_FILENAME);
+
+    // NOTE: On macOS, use the statement below instead of the one above!
+    // Path dataFile = Paths.get(path, DATA_FILENAME);
+
     return dataFile.toFile();
   }
 
