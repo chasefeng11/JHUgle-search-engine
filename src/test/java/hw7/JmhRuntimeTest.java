@@ -23,31 +23,31 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class JmhRuntimeTest {
 
-  @State(Scope.Benchmark)
-  public static class BenchmarkState {
-    @Param({"apache.txt", "jhu.txt", "joanne.txt", "newegg.txt", "random164.txt", "urls.txt"})
-    public String fileName;
-  }
+    @State(Scope.Benchmark)
+    public static class BenchmarkState {
+        @Param({"apache.txt", "jhu.txt", "joanne.txt", "newegg.txt", "random164.txt", "urls.txt"})
+        public String fileName;
+    }
 
-  @Benchmark
-  @Fork(value = 1, warmups = 1)
-  @Warmup(iterations = 1)
-  @Measurement(iterations = 2)
-  @OutputTimeUnit(TimeUnit.MILLISECONDS)
-  @BenchmarkMode(Mode.AverageTime)
-  public void buildSearchEngine(Blackhole blackhole, BenchmarkState state) {
-    Config.DATA_FILENAME = state.fileName;
-    Jhugle jhUgle = new Jhugle(Config.getMap());
-    jhUgle.buildSearchEngine(Config.getDataFile());
-    blackhole.consume(jhUgle);
-  }
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    @Warmup(iterations = 1)
+    @Measurement(iterations = 2)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    public void buildSearchEngine(Blackhole blackhole, BenchmarkState state) {
+        Config.DATA_FILENAME = state.fileName;
+        Jhugle jhUgle = new Jhugle(Config.getMap());
+        jhUgle.buildSearchEngine(Config.getDataFile());
+        blackhole.consume(jhUgle);
+    }
 
-  public static void main(String[] args) throws RunnerException {
-    Options opt = new OptionsBuilder()
-        .include(JmhRuntimeTest.class.getSimpleName())
-        .addProfiler(GcProfiler.class)
-        .build();
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(JmhRuntimeTest.class.getSimpleName())
+                .addProfiler(GcProfiler.class)
+                .build();
 
-    new Runner(opt).run();
-  }
+        new Runner(opt).run();
+    }
 }

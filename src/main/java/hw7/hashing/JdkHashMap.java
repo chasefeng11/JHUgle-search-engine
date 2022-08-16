@@ -1,6 +1,7 @@
 package hw7.hashing;
 
 import hw7.Map;
+
 import java.util.Iterator;
 
 /**
@@ -11,60 +12,60 @@ import java.util.Iterator;
  */
 public class JdkHashMap<K, V> implements Map<K, V> {
 
-  private java.util.Map<K, V> map;
+    private java.util.Map<K, V> map;
 
-  /**
-   * Instantiate JdkHashMap.
-   */
-  public JdkHashMap() {
-    map = new java.util.HashMap<>();
-  }
-
-  @Override
-  public void insert(K k, V v) throws IllegalArgumentException {
-    if (k == null || map.containsKey(k)) {
-      throw new IllegalArgumentException();
-    }
-    map.put(k, v);
-  }
-
-  @Override
-  public V remove(K k) throws IllegalArgumentException {
-    if (k == null || !map.containsKey(k)) {
-      throw new IllegalArgumentException();
+    /**
+     * Instantiate JdkHashMap.
+     */
+    public JdkHashMap() {
+        map = new java.util.HashMap<>();
     }
 
-    return map.remove(k);
-  }
-
-  @Override
-  public void put(K k, V v) throws IllegalArgumentException {
-    if (k == null || !map.containsKey(k)) {
-      throw new IllegalArgumentException();
+    @Override
+    public void insert(K k, V v) throws IllegalArgumentException {
+        if (k == null || map.containsKey(k)) {
+            throw new IllegalArgumentException();
+        }
+        map.put(k, v);
     }
-    map.put(k, v);
-  }
 
-  @Override
-  public V get(K k) throws IllegalArgumentException {
-    if (k == null || !map.containsKey(k)) {
-      throw new IllegalArgumentException();
+    @Override
+    public V remove(K k) throws IllegalArgumentException {
+        if (k == null || !map.containsKey(k)) {
+            throw new IllegalArgumentException();
+        }
+
+        return map.remove(k);
     }
-    return map.get(k);
-  }
 
-  @Override
-  public boolean has(K k) {
-    return map.containsKey(k);
-  }
+    @Override
+    public void put(K k, V v) throws IllegalArgumentException {
+        if (k == null || !map.containsKey(k)) {
+            throw new IllegalArgumentException();
+        }
+        map.put(k, v);
+    }
 
-  @Override
-  public int size() {
-    return map.size();
-  }
+    @Override
+    public V get(K k) throws IllegalArgumentException {
+        if (k == null || !map.containsKey(k)) {
+            throw new IllegalArgumentException();
+        }
+        return map.get(k);
+    }
 
-  @Override
-  public Iterator<K> iterator() {
-    return map.keySet().iterator();
-  }
+    @Override
+    public boolean has(K k) {
+        return map.containsKey(k);
+    }
+
+    @Override
+    public int size() {
+        return map.size();
+    }
+
+    @Override
+    public Iterator<K> iterator() {
+        return map.keySet().iterator();
+    }
 }
