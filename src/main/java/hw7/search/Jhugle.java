@@ -4,7 +4,6 @@ import hw7.Map;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
-import obfuscate.SimpleSearchEngine;
 
 /**
  * This is a wrapper class around staff's implementation of JHUgle.

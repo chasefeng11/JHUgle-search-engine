@@ -1,6 +1,0 @@
-http://www.cars.com/
-red
-https://en.wikipedia.org/wiki/Cat
-cat red
-http://www.foobar.com/baz
-baz red
