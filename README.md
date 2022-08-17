@@ -1,8 +1,5 @@
 # JHUgle Search Engine
 
-Author: Chase Feng  
-Date: April 2022
-
 ## Description
 
 JHUhgle is a simple search engine which can parse text files containing a list of websites and the keywords on each site.
