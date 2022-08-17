@@ -35,7 +35,7 @@ public class Config {
 
         Path dataFile = Paths.get(path.substring(1), DATA_FILENAME);
 
-        // NOTE: On macOS, use the statement below instead of the one above!
+        // TODO: On Linux/macOS, use the statement below instead of the one above!
         // Path dataFile = Paths.get(path, DATA_FILENAME);
 
         return dataFile.toFile();

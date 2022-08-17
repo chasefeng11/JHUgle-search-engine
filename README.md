@@ -1,43 +1,61 @@
-# Discussion
+# JHUgle Search Engine
 
-In this experiment, I implemented a HashMap based on both the OpenAddressing technique and the Chaining technique.
+Author: Chase Feng  
+Date: April 2022
 
-I developed the OpenAddressing HashMap by creating an array of Node objects. A node object would be written to an index
-in the array based on its hashCode value, assuming this index was not full. There were three primary developer parameters
-in this -- the size of the array (number of buckets), the load factor, and the probing strategy. I tweaked these by
-setting them as constant fields, and edited them for various experimental runs. Experimenting with the
-array size, it appeared smaller array sizes led to improved performance. Furthermore, the load factor should not
-be too close to 1, because this significantly hampered performance, since each when our array was almost full, it would
-require probing to in effect perform a linear search to find a free index. Lastly, I implemented/experimented with
-1) linear probing, 2) quadratic probing, and 3) double probing. Surprisingly, linear probing seemed to work the best.
-Both quadratic probing and double probing led to some inaccuracies with insert, because in this case, my code would
-not examine every index in the array, and would falsely claim the array was full even when it was not.
+## Description
 
-On the other hand, I developed the Chaining HashMap with an Array of buckets, where each bucket was an ArrayList of
-Node objects (again pertaining to a key/value pair). I chose to implement it in this way -- with ArrayLists rather
-than LinkedLists -- out of ease of implementation, as without being able to explicitly iterate to the next Node in
-a LinkedList without implementing my own LinkedList class, this way proved easier. I also had to decide on the size
-of the array parameter. I chose 3 because it appeared that smaller sizes proved better than larger ones, though I'm not
-quite sure why this was. 
+JHUhgle is a simple search engine which can parse text files containing a list of websites and the keywords on each site.
+The program leverages hashing, constructing an index that maps each keyword to a collection of URLs in which it appears.
+Once the index is created, the user can run the search engine and query it.
 
-In all, the OpenAddressing HashMap proved to be faster than the Chaining HashMap for most sufficiently low load factors.
-For instance, for a load factor of 0.5, I found
+## Instructions
 
-Benchmark                                                                 (fileName)  Mode  Cnt           Score   Error   Units
-JmhRuntimeTest.buildSearchEngine                                          apache.txt  avgt    2         305.113           ms/op
+To run the search engine, run Driver.main in the hw7 package (if using a Linux or macOS machine, open Config.java and
+follow the instructions annotated with a TODO, before running the driver program.)
 
-for open addressing, and 
+Queries support the following operations, which can be combined in postfix notation
+* _[keyword]_: Fetches all URLs containing the specified keyword
+* _&&_: Fetches all URLs that match both the first query and the second query
+* _||_: Fetches all URLs that match either the first query or the second query
+* _?_: Prints the URLs corresponding to the most recent query result (based on a single keyword input or an operation result)
+* _!_: Quits the program
 
-Benchmark                                                                 (fileName)  Mode  Cnt           Score   Error   Units
-JmhRuntimeTest.buildSearchEngine                                          apache.txt  avgt    2         503.017           ms/op
+A program run might resemble the following:
 
-for chaining.
+    === JHUgle Search Engine Running! ===
+    >>> Add your query below >>>
+    > ?
+    > baz
+    > red
+    > ?
+    https://en.wikipedia.org/wiki/Cat
+    http://www.foobar.com/baz
+    http://www.cars.com/
+    > &&
+    > ?
+    http://www.foobar.com/baz
+    > !
+    
+    Process finished with exit code 0
 
-However, note that for a load factor of 0.9, this became
+## Data Files
 
-Benchmark                                                                 (fileName)  Mode  Cnt           Score   Error   Units
-JmhRuntimeTest.buildSearchEngine                                          apache.txt  avgt    2         541.424           ms/op
+Users can control what data file is fed to JHUgle through Config.DATA_FILENAME.
 
-which reflects worse performace. 
+Several data files have been included in `src/main/resources`, ranging from short to very large.
 
+## Hashing
 
+Different varieties of the Hash Table data structure make up the core logic of our search engine. With operations of **O(1)**,
+Hash Tables enable efficient lookups, which makes them ideal for searching over large amounts of data.
+
+All Hash Tables in JHUgle have been implemented with only arrays, and without using Java's built-in maps. There are
+implementations of a **Chaining Hash Map** and **Open Addressing Hash Map**, which provide different strategies for
+Collision Resolution.
+
+## Testing and Profiling
+
+Tests have been written in JUnit, and can be found can be found `src/test/java/hw7`. In particular, they verify the
+accuracy of the map implementations and their core implementations. There is also a benchmark test `JmhRuntimeTest.java`,
+which has been designed to build JHUgle with different data files and profile its time and memory performance.
